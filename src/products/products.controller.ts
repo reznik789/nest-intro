@@ -14,41 +14,41 @@ import { ProductService } from './products.service';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
   @Post()
-  addProduct(
+  async addProduct(
     @Body('title') title: string,
     @Body('description') descr: string,
     @Body('price') price: number,
   ) {
-    const id = this.productService.insertProduct(title, descr, price);
+    const id = await this.productService.insertProduct(title, descr, price);
     return { id };
   }
 
   @Get()
-  getProducts() {
-    return this.productService.getAllProducts();
+  async getProducts() {
+    return await this.productService.getAllProducts();
   }
 
   @Get(':id')
-  getSingleProduct(@Param('id') id: string) {
-    return this.productService.getProductById(id);
+  async getSingleProduct(@Param('id') id: string) {
+    return await this.productService.getProductById(id);
   }
 
   @Patch(':id')
-  updateProduct(
+  async updateProduct(
     @Param('id') id: string,
     @Body('title') title: string,
     @Body('description') descr: string,
     @Body('price') price: number,
   ) {
-    this.productService.updateProductById(id, title, descr, price);
+    await this.productService.updateProductById(id, title, descr, price);
     return {
       success: true,
     };
   }
 
   @Delete(':id')
-  removeProduct(@Param('id') id: string) {
-    this.productService.deleteProductById(id);
+  async removeProduct(@Param('id') id: string) {
+    await this.productService.deleteProductById(id);
     return {
       success: true,
     };
